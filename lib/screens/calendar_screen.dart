@@ -88,7 +88,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       children: [
                         Spacer(),
                         Text(
-                          "Calendrier",
+                          "Calendar",
                           style: TextStyle(fontSize: 32),
                         ),
                         Spacer(),
@@ -204,7 +204,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                       size: 70,
                                       color: Color(0xEEFFC127),
                                     ),
-                                    Text("${nbTodo} à faire!",
+                                    Text("${nbTodo} Todo!",
                                         style: TextStyle(
                                             fontSize: 20, color: Colors.white)),
                                     Spacer(),

@@ -6,9 +6,9 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/> -->
 
    <application
-        android:label="todoapp"
+        android:label="Optimization"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/optimization">
         <activity
             android:showWhenLocked="true"
             android:turnScreenOn="true"

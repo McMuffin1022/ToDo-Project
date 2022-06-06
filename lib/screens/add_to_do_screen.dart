@@ -223,7 +223,7 @@ class _AddToDoScreenState extends State<AddToDoScreen> {
                         child: TextField(
                           focusNode: _titleFocus,
                           decoration: InputDecoration(
-                            hintText: "Nom de la tâche",
+                            hintText: "Name Todo...",
                             border: InputBorder.none,
                           ),
                           style: TextStyle(
@@ -386,7 +386,7 @@ class _AddToDoScreenState extends State<AddToDoScreen> {
                                   controller: TextEditingController()
                                     ..text = "",
                                   decoration: InputDecoration(
-                                    hintText: "Entrez une tâche...",
+                                    hintText: "Task...",
                                     border: InputBorder.none,
                                   ),
                                   style: TextStyle(
@@ -516,7 +516,7 @@ class _AddToDoScreenState extends State<AddToDoScreen> {
                                 context,
                               ) =>
                                   AlertDialog(
-                                    title: Text("Nouveau Type"),
+                                    title: Text("New Type"),
                                     content: StatefulBuilder(
                                       builder: (BuildContext context,
                                               StateSetter setState) =>
@@ -527,7 +527,7 @@ class _AddToDoScreenState extends State<AddToDoScreen> {
                                           children: [
                                             Row(
                                               children: [
-                                                Text("Couleur "),
+                                                Text("Color "),
                                                 GestureDetector(
                                                   child: Container(
                                                     width: 100,
@@ -545,7 +545,7 @@ class _AddToDoScreenState extends State<AddToDoScreen> {
                                                       builder: (context) =>
                                                           AlertDialog(
                                                         title: const Text(
-                                                            'Choisisez une couleur!'),
+                                                            'Pick a color!'),
                                                         content:
                                                             SingleChildScrollView(
                                                           child: ColorPicker(
@@ -558,7 +558,7 @@ class _AddToDoScreenState extends State<AddToDoScreen> {
                                                         actions: <Widget>[
                                                           GestureDetector(
                                                             child:
-                                                                Text('Valider'),
+                                                                Text('New'),
                                                             onTap: () {
                                                               setState(() {
                                                                 currentColor =
@@ -611,7 +611,7 @@ class _AddToDoScreenState extends State<AddToDoScreen> {
                                           onPressed: () {
                                             Navigator.pop(context);
                                           },
-                                          child: Text("Annulez")),
+                                          child: Text("Cancel")),
                                       TextButton(
                                           onPressed: () {
                                             _dbHelper.insertType(Type(
@@ -621,7 +621,7 @@ class _AddToDoScreenState extends State<AddToDoScreen> {
                                             setState(() {});
                                             Navigator.of(context).pop();
                                           },
-                                          child: Text("Confirmez")),
+                                          child: Text("New")),
                                     ],
                                   ));
                         },
