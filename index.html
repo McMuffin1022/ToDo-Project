@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="fr-CA" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f7f6">
+  <meta name="description" content="On négocie ton forfait cellulaire à ta place pour faire baisser ta facture. Aucun frais si tu n'économises rien. Tu gardes ton numéro.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Fais baisser ta facture de cell">
+  <meta property="og:description" content="On appelle ta compagnie à ta place. Si tu n'économises rien, tu ne paies rien.">
+  <title>Fais baisser ta facture de cell | Économise sur ton forfait</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+
+/* Layout: one narrow column like a folded bill; hero = an annotated statement, then 3 steps, the fee math, FAQ, one CTA repeated. */
+:root{
+  --paper:#f5f7f6; --sheet:#ffffff; --ink:#0f2a2e; --muted:#56706f; --line:#d9e2e0;
+  --accent:#0d6b5f; --accent-ink:#ffffff; --mark:#ffe46b; --cut:#b4483b;
+  --f-display:"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --f-body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --paper:#0d1817; --sheet:#132321; --ink:#e7f1ef; --muted:#9db5b2; --line:#24403c;
+  --accent:#4cc3ad; --accent-ink:#06201c; --mark:#6b5a12; --cut:#ef8a7c; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --paper:#0d1817; --sheet:#132321; --ink:#e7f1ef; --muted:#9db5b2; --line:#24403c;
+  --accent:#4cc3ad; --accent-ink:#06201c; --mark:#6b5a12; --cut:#ef8a7c; color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:400 17px/1.55 var(--f-body);
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:0}
+.wrap{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:56px;padding-block:36px 64px}
+h1,h2{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.015em}
+h1{font-size:clamp(2.3rem, 8vw, 3.4rem);font-weight:800;line-height:1.02}
+h2{font-size:1.6rem;font-weight:800;line-height:1.1}
+p{margin:0}
+.eyebrow{font:600 .78rem/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lead{font-size:1.15rem;color:var(--muted);max-width:34ch}
+mark{background:linear-gradient(transparent 55%, var(--mark) 55%);color:inherit;padding:0 .1em}
+.hero{display:flex;flex-direction:column;gap:18px}
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;align-self:flex-start;
+  background:var(--accent);color:var(--accent-ink);font:700 1.08rem/1 var(--f-body);text-decoration:none;
+  padding:18px 24px;border-radius:14px;transition:transform .15s ease}
+.cta:hover{transform:translateY(-2px)}
+.cta:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--mark);outline-offset:3px}
+.under{font-size:.92rem;color:var(--muted)}
+
+/* The bill */
+.bill{background:var(--sheet);border:1px solid var(--line);border-radius:6px;padding:22px 20px 18px;
+  font-family:var(--f-mono);font-size:.92rem;position:relative;box-shadow:0 18px 40px -28px rgba(15,42,46,.35)}
+.bill::after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:10px;
+  background:radial-gradient(circle at 6px 0, transparent 6px, var(--sheet) 6.5px) 0 0/12px 10px repeat-x}
+.bill-top{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;padding-bottom:12px;border-bottom:1px dashed var(--line)}
+.li{display:grid;grid-template-columns:1fr auto auto;gap:6px 14px;align-items:baseline;padding:11px 0;border-bottom:1px dashed var(--line);font-variant-numeric:tabular-nums}
+.li span:first-child{font-family:var(--f-body);font-weight:500}
+.old{color:var(--cut);text-decoration:line-through;text-decoration-thickness:2px}
+.new{font-weight:600}
+.total{display:grid;grid-template-columns:1fr auto;padding-top:12px;font-weight:600;font-variant-numeric:tabular-nums}
+.total b{background:var(--mark);padding:0 .3em}
+.note{margin-top:10px;font-size:.74rem;color:var(--muted);font-family:var(--f-body)}
+
+/* Steps */
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.steps li{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start;background:var(--sheet);border:1px solid var(--line);border-radius:12px;padding:16px}
+.n{font:800 1.4rem/1 var(--f-display);color:var(--accent);padding-top:2px}
+.steps b{display:block;margin-bottom:2px}
+.steps p{color:var(--muted);font-size:.97rem}
+
+/* Fee math */
+.math{display:flex;flex-direction:column;gap:16px}
+.slider-row{display:grid;gap:8px}
+.slider-row label{font-weight:700}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.out{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.out div{background:var(--sheet);border:1px solid var(--line);border-radius:10px;padding:12px;min-width:0}
+.out span{display:block;font-size:.8rem;color:var(--muted)}
+.out b{font:600 1.25rem/1.2 var(--f-mono);font-variant-numeric:tabular-nums}
+.out .keep{border-color:var(--accent)}
+.out .keep b{color:var(--accent)}
+@media (max-width:440px){ .out{grid-template-columns:1fr} }
+
+/* Checklist */
+.have{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.have span{font-family:var(--f-mono);font-size:.85rem;border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--sheet)}
+
+/* FAQ */
+.faq{display:grid;gap:8px}
+details{background:var(--sheet);border:1px solid var(--line);border-radius:12px;padding:0 16px}
+summary{cursor:pointer;font-weight:700;padding:15px 0;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--f-mono);color:var(--accent);font-weight:600}
+details[open] summary::after{content:"−"}
+details p{padding:0 0 16px;color:var(--muted)}
+.end{display:flex;flex-direction:column;gap:14px;border-top:2px solid var(--ink);padding-top:28px}
+section{display:flex;flex-direction:column;gap:18px}
+@media (prefers-reduced-motion: reduce){ .cta{transition:none} }
+
+/* A fully self-contained one-page experience. */
+a.cta { cursor: pointer; text-align: center; }
+@media (max-width: 540px){
+  .wrap{gap:44px;padding-block:26px 52px}
+  .hero .cta,.end .cta{width:100%;align-self:stretch}
+  .bill{padding:18px 13px}
+  .li{gap:6px 7px;font-size:.84rem}
+  .out{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .out b{font-size:1rem}
+  .out span{font-size:.72rem}
+}
+@media (max-width: 350px){.out{grid-template-columns:1fr}}
+
+  </style>
+</head>
+<body>
+<main class="wrap">
+  <header class="hero">
+    <p class="eyebrow">Forfaits cellulaires · Au Québec</p>
+    <h1>Ton cell te coûte trop cher. <mark>On appelle à ta place.</mark></h1>
+    <p class="lead">On négocie avec ta compagnie ou on te trouve mieux ailleurs, et tu gardes ton numéro. Si tu n'économises rien, tu ne paies rien.</p>
+    <a class="cta" id="cta-top" href="https://tally.so/r/0VV1XN" target="_blank" rel="noopener noreferrer">Remplir ma fiche (3 minutes) →</a>
+    <p class="under">Rien n'est changé sans ton accord.</p>
+  </header>
+
+  <div class="bill" aria-label="Exemple de facture avant et après">
+    <div class="bill-top"><span>Facture de cell</span><span>Exemple</span></div>
+    <div class="li"><span>Ligne 1, 50 Go</span><span class="old">75,00 $</span><span class="new">45,00 $</span></div>
+    <div class="li"><span>Ligne 2, 20 Go</span><span class="old">60,00 $</span><span class="new">40,00 $</span></div>
+    <div class="li"><span>Ligne 3, 5 Go</span><span class="old">45,00 $</span><span class="new">25,00 $</span></div>
+    <div class="total"><span>Économie par mois</span><b>70,00 $</b></div>
+    <p class="note">Exemple pour illustrer. Ton économie dépend de ton forfait, de ton utilisation et des offres du moment.</p>
+  </div>
+
+  <section aria-labelledby="h-comment">
+    <h2 id="h-comment">Comment ça marche</h2>
+    <ol class="steps">
+      <li><span class="n">1</span><div><b>Tu remplis ta fiche</b><p>Ta compagnie, ton prix, tes lignes et ce que tu utilises. Une photo de ta facture aide beaucoup.</p></div></li>
+      <li><span class="n">2</span><div><b>On compare et on appelle</b><p>On compare toutes les compagnies et les rabais auxquels tu as droit, puis on appelle ta compagnie pour avoir le meilleur prix.</p></div></li>
+      <li><span class="n">3</span><div><b>Tu dis oui ou non</b><p>On te présente l'offre. Tu acceptes seulement si elle te convient.</p></div></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="h-prix">
+    <h2 id="h-prix">Combien ça coûte</h2>
+    <p>Rien au départ. Si on te fait économiser, tu paies <b>30 % de ce que tu sauves sur 12 mois</b>, une seule fois. Le reste, tu le gardes.</p>
+    <div class="math">
+      <div class="slider-row">
+        <label for="econ">Si on te fait sauver <span id="econ-v">40</span> $ par mois</label>
+        <input id="econ" type="range" min="10" max="150" step="5" value="40">
+      </div>
+      <div class="out" aria-live="polite">
+        <div><span>Tu sauves la 1re année</span><b id="o-an">480 $</b></div>
+        <div><span>Nos frais, une fois</span><b id="o-frais">144 $</b></div>
+        <div class="keep"><span>Tu gardes la 1re année</span><b id="o-garde">336 $</b></div>
+      </div>
+      <p class="under">Après la première année, tu gardes 100 % de l'économie tant que le prix reste le même.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-quoi">
+    <h2 id="h-quoi">Ce qu'on vérifie pour toi</h2>
+    <div class="have"><span>Rabais multi-lignes</span><span>Programmes d'employeur et de syndicat</span><span>Rabais avec ton internet</span><span>Marques à rabais sur le même réseau</span><span>Forfaits Canada–É.-U.</span><span>Fin de ton rabais actuel</span></div>
+  </section>
+
+  <section aria-labelledby="h-faq">
+    <h2 id="h-faq">Questions</h2>
+    <div class="faq">
+      <details><summary>Pourquoi je ne le ferais pas moi-même ?</summary><p>Tu peux. Mais ça prend souvent plus d'une heure d'attente, il faut savoir quoi demander au service de rétention et connaître les offres des autres compagnies. Nous, on le fait tous les jours.</p></details>
+      <details><summary>Et si on ne trouve rien de mieux ?</summary><p>Tu ne paies rien. Tu sauras au moins que tu as déjà un bon prix.</p></details>
+      <details><summary>Est-ce que vous changez quelque chose sans me le dire ?</summary><p>Non. On te présente l'offre et tu décides. Aucun changement sans ton accord.</p></details>
+      <details><summary>Est-ce que je garde mon numéro ?</summary><p>Oui. Ton numéro te suit chez la nouvelle compagnie, et ton ancien service s'annule tout seul au transfert.</p></details>
+      <details><summary>Mon téléphone est encore en paiement. Ça marche quand même ?</summary><p>Oui. On en tient compte : parfois on négocie chez le même fournisseur, parfois ça vaut la peine de changer même avec le solde.</p></details>
+      <details><summary>Qu'est-ce que vous faites avec mes informations ?</summary><p>Elles servent seulement à analyser tes factures et à parler à ton fournisseur. On ne les vend pas et on ne les partage avec personne d'autre.</p></details>
+    </div>
+  </section>
+
+  <div class="end">
+    <h2>Prêt à payer moins ?</h2>
+    <a class="cta" id="cta-bottom" href="https://tally.so/r/0VV1XN" target="_blank" rel="noopener noreferrer">Remplir ma fiche →</a>
+    <p class="under">3 minutes. On te revient d'ici 48 heures ouvrables.</p>
+  </div>
+</main>
+<script>
+
+(function(){
+  const r = document.getElementById("econ");
+  const fmt = n => Math.round(n).toLocaleString("fr-CA") + " $";
+  function upd(){
+    const e = Number(r.value)||0, an = e*12, frais = an*0.30;
+    document.getElementById("econ-v").textContent = e;
+    document.getElementById("o-an").textContent = fmt(an);
+    document.getElementById("o-frais").textContent = fmt(frais);
+    document.getElementById("o-garde").textContent = fmt(an-frais);
+  }
+  r.addEventListener("input", upd); upd();
+})();
+
+</script>
+</body>
+</html>
