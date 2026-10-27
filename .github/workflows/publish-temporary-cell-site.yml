@@ -1,0 +1,25 @@
+name: Publish temporary cellular site
+on:
+  push:
+    branches:
+      - gh-pages
+    paths:
+      - index.html
+      - .github/workflows/publish-temporary-cell-site.yml
+permissions:
+  contents: read
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish HTML anonymously to Display.dev (30 days)
+        shell: bash
+        run: |
+          set -euo pipefail
+          response="$(curl --fail-with-body --silent --show-error --retry 2 \
+            -X POST 'https://api.display.dev/v1/public/artifacts' \
+            -F 'file=@index.html;type=text/html' \
+            -F 'name=Fais baisser ta facture de cell')"
+          printf '%s' "$response" | python3 -c 'import sys,json; d=json.load(sys.stdin); u=d.get("previewUrl"); assert u and u.startswith("https://"), "No valid preview URL"; print("PUBLIC_SITE_URL=" + u); print("EXPIRES_AT=" + str(d.get("expiresAt", "")))'
